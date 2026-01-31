@@ -12,7 +12,6 @@ export default function() {
     sectionLength: 0,
     sectionName: "",
     department: "",
-    title: "",
     pdfUrl: "",
   });
   const [entryNumber, setEntry] = useState(0);
@@ -28,15 +27,12 @@ export default function() {
       const response = await fetch(`/api/boe?date=${date}`);
       const data = await response.json();
 
-      console.log(data);
-
       setBoeCall({
         identifier: data.sumario_diario.identificador,
         sectionLength: data.seccion.length,
         sectionName: data.seccion[entryNumber].nombre,
         department: data.seccion[entryNumber].departamento.nombre,
-        title: data.seccion[entryNumber].departamento.texto.item.titulo,
-        pdfUrl: data.seccion[entryNumber].departamento.texto.item.url_pdf.texto,
+        pdfUrl: data.sumario_diario.url_pdf.texto,
       });
     } catch (error) {
       alert("Doesn't exist that entry");
@@ -79,13 +75,13 @@ export default function() {
               <p>Choose one of these {boeCall.sectionLength} entries</p>
               <div className="flex justify-center m-2 border-b-2">
                 <Input
-                  max={boeCall.sectionLength}
+                  max={boeCall.sectionLength - 1}
                   type={"number"}
                   className={
                     "px-2 py-2 text-center border-gray-700 border-2 m-2 sm:w-10/12 rounded w-1/2"
                   }
                   text={"Enter the entry"}
-                  onChange={(e) => setEntry(e.target.value)}
+                  onChange={(e) => setEntry(Number(e.target.value))}
                 />
                 <Button
                   className={
@@ -96,12 +92,11 @@ export default function() {
                 />
               </div>
               <div className="">
-                <div className="text-center border-b-2 m-2">
+                <div className="flex flex-col justify-center items-center border-b-2 m-2">
                   <p>{boeCall.sectionName}</p>
                   <p>{boeCall.department}</p>
                 </div>
                 <div className="text-center m-2">
-                  <p>{boeCall.title}</p>
                   <p>
                     <a
                       className="text-blue-900 checked:text-gray-200"
