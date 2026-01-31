@@ -24,6 +24,7 @@ export default function() {
       console.log(data);
 
       setIdentifier(data.sumario_diario.identificador);
+      setSectionLength(data.seccion.length);
     } catch (error) {
       alert("Doesn't exist that entry");
     }
@@ -34,18 +35,20 @@ export default function() {
         <Title text={"summary"} />
       </section>
       <section className="rounded px-2 py-2 m-2 flex justify-center">
-        <form className="w-10/12 px-2 py-2 bg-[#096999] border-gray-700 border-2 rounded-2xl flex justify-center" onSubmit={(e) => e.preventDefault()}>
-          <Input
-            type={"date"}
-            onChange={(e) => setDate(e.target.value)}
-          />
-          <Button text={"Send request"} onClick={() => fixDate(date)} />
+        <form
+          className="w-10/12 sm:w-1/4 px-2 py-2 bg-[#096999] border-gray-700 border-2 rounded-2xl flex justify-center"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <Input type={"date"} onChange={(e) => setDate(e.target.value)} />
+          <Button className={"bg-[#116998] border-2 border-gray-700 rounded px-2 py-2"} text={"Send request"} onClick={() => fixDate(date)} />
         </form>
       </section>
-      <section>
-        <p>{identifier}</p>
-        
-      </section>
+      {sectionLength ? (
+        <section className="">
+          <p>{identifier}</p>
+          <p>{sectionLength} Entries exist</p>
+        </section>
+      ) : null}{" "}
     </main>
   );
 }
