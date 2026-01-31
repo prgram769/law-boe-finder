@@ -24,6 +24,7 @@ export default function RootLayout({ children }) {
       >
         {children}
       </body>
+      <footer>Made with ❤️ by rugby01</footer>
     </html>
   );
 }

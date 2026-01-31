@@ -28,7 +28,7 @@ export default function Home() {
         <div className="flex sm:flex-row sm:justify-center flex-col items-center m-3">
           <Button
             text={"Summary"}
-            className={"hover:animate-bounce bg-[#096999] rounded-2xl sm:w-auto w-1/3 text px-2 py-2 m-2"}
+            className={"transition ease-in-out duration-150 animate-pulse bg-[#096999] rounded-2xl sm:w-auto w-1/3 text px-2 py-2 m-2"}
             onClick={() => handleClick("sumary")}
           />
         </div>
