@@ -1,13 +1,11 @@
-function Input({onChange, type, text}) {
+function Input({ onChange, type, text, className }) {
   return (
-    <section className="flex flex-col justify-center">
-      <input
-        placeholder={text}
-        type={type} 
-        className="border-2 border-gray-700 rounded sm:w-10/12 px-2 py-2 m-2"
-        onChange={onChange}
-      />
-    </section>
+    <input
+      placeholder={text}
+      type={type}
+      className={className}
+      onChange={onChange}
+    />
   );
 }
 
