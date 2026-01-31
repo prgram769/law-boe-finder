@@ -20,11 +20,7 @@ export async function GET(request) {
     );
     const data = await response.json();
 
-    data.data.sumario.diario[0].seccion.forEach(element => {
-      console.log(element);
-    });
-
-    return Response.json(data.data.sumario.diario[0].seccion);
+    return Response.json(data.data.sumario.diario[0]);
   } catch (error) {
     return new Response(
       JSON.stringify({error: "Internal server error"}),

@@ -4,7 +4,7 @@ function Input({onChange, type, text}) {
       <input
         placeholder={text}
         type={type} 
-        className="border-2 border-black rounded sm:w-1/6 px-2 py-2 m-2"
+        className="border-2 border-gray-700 rounded sm:w-1/6 px-2 py-2 m-2"
         onChange={onChange}
       />
     </section>
