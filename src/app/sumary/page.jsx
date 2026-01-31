@@ -7,9 +7,14 @@ import { useState } from "react";
 
 export default function() {
   const [date, setDate] = useState("");
-  const [identifier, setIdentifier] = useState("");
-  const [sectionLength, setSectionLength] = useState(0);
-  const [sectionName, setSectionName] = useState(0);
+  const [boeCall, setBoeCall] = useState({
+    identifier: "",
+    sectionLength: 0,
+    sectionName: "",
+    department: "",
+    title: "",
+    pdfUrl: "",
+  });
   const [entryNumber, setEntry] = useState(0);
 
   function fixDate(unfixedDate) {
@@ -25,13 +30,14 @@ export default function() {
 
       console.log(data);
 
-      setIdentifier(data.sumario_diario.identificador);
-      setSectionLength(data.seccion.length);
-
-      if (!entryNumber) {
-        setSectionName(data.seccion[entryNumber].nombre);
-        console.log(sectionName);
-      }
+      setBoeCall({
+        identifier: data.sumario_diario.identificador,
+        sectionLength: data.seccion.length,
+        sectionName: data.seccion[entryNumber].nombre,
+        department: data.seccion[entryNumber].departamento.nombre,
+        title: data.seccion[entryNumber].departamento.texto.item.titulo,
+        pdfUrl: data.seccion[entryNumber].departamento.texto.item.url_pdf.texto,
+      });
     } catch (error) {
       alert("Doesn't exist that entry");
     }
@@ -62,17 +68,18 @@ export default function() {
           />
         </form>
       </section>
-      {sectionLength ? (
+      {boeCall.sectionLength ? (
         <section className="flex justify-center">
           <div className="border-2 sm:w-1/4 w-10/12 text-center border-gray-700 bg-[#116998] rounded-2xl">
             <div className="flex flex-col justify-center px-2 py-2 mb-2 border-b-2">
-              <p>{identifier}</p>
-              <p>{sectionLength} Entries exist</p>
+              <p>{boeCall.identifier}</p>
+              <p>{boeCall.sectionLength} Entries exist</p>
             </div>
             <div className="flex flex-col justify-center">
-              <p>Choose one of these {sectionLength} entries</p>
+              <p>Choose one of these {boeCall.sectionLength} entries</p>
               <div className="flex justify-center m-2 border-b-2">
                 <Input
+                  max={boeCall.sectionLength}
                   type={"number"}
                   className={
                     "px-2 py-2 text-center border-gray-700 border-2 m-2 sm:w-10/12 rounded w-1/2"
@@ -85,14 +92,28 @@ export default function() {
                     "rounded sm:w-10/12 border-2 w-1/2 border-gray-700 m-2 px-2 py-2"
                   }
                   text={"View entry"}
-                  onClick={() => callToServer()}
+                  onClick={() => fixDate(date)}
                 />
               </div>
-              {sectionName ? (
-                <div>
-                  <p>{sectionName}</p>
+              <div className="">
+                <div className="text-center border-b-2 m-2">
+                  <p>{boeCall.sectionName}</p>
+                  <p>{boeCall.department}</p>
                 </div>
-              ) : null}
+                <div className="text-center m-2">
+                  <p>{boeCall.title}</p>
+                  <p>
+                    <a
+                      className="text-blue-900 checked:text-gray-200"
+                      target="_blank"
+                      rel="noopener"
+                      href={boeCall.pdfUrl}
+                    >
+                      PDF URL
+                    </a>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
