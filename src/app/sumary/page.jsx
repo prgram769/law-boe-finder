@@ -9,6 +9,8 @@ export default function() {
   const [date, setDate] = useState("");
   const [identifier, setIdentifier] = useState("");
   const [sectionLength, setSectionLength] = useState(0);
+  const [sectionName, setSectionName] = useState(0);
+  const [entryNumber, setEntry] = useState(0);
 
   function fixDate(unfixedDate) {
     const newDate = unfixedDate.replaceAll("-", "");
@@ -22,9 +24,13 @@ export default function() {
       const data = await response.json();
 
       console.log(data);
+        setIdentifier(data.sumario_diario.identificador);
+        setSectionLength(data.seccion.length);
 
-      setIdentifier(data.sumario_diario.identificador);
-      setSectionLength(data.seccion.length);
+      if (!entryNumber) {
+        setSectionName(data.seccion[entryNumber].nombre);
+        console.log(sectionName);
+      }
     } catch (error) {
       alert("Doesn't exist that entry");
     }
@@ -64,21 +70,28 @@ export default function() {
             </div>
             <div className="flex flex-col justify-center">
               <p>Choose one of these {sectionLength} entries</p>
-              <div className="flex justify-center m-2">
+              <div className="flex justify-center m-2 border-b-2">
                 <Input
                   type={"number"}
                   className={
                     "px-2 py-2 text-center border-gray-700 border-2 m-2 sm:w-10/12 rounded w-1/2"
                   }
                   text={"Enter the entry"}
+                  onChange={(e) => setEntry(e.target.value)}
                 />
                 <Button
                   className={
                     "rounded sm:w-10/12 border-2 w-1/2 border-gray-700 m-2 px-2 py-2"
                   }
                   text={"View entry"}
+                  onClick={() => callToServer()}
                 />
               </div>
+              {sectionName ? (
+                <div>
+                  <p>{sectionName}</p>
+                </div>
+              ) : null}
             </div>
           </div>
         </section>
