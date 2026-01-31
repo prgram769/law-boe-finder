@@ -24,8 +24,9 @@ export default function() {
       const data = await response.json();
 
       console.log(data);
-        setIdentifier(data.sumario_diario.identificador);
-        setSectionLength(data.seccion.length);
+
+      setIdentifier(data.sumario_diario.identificador);
+      setSectionLength(data.seccion.length);
 
       if (!entryNumber) {
         setSectionName(data.seccion[entryNumber].nombre);

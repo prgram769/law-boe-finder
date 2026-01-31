@@ -25,19 +25,11 @@ export default function Home() {
         <Title text={"law boe finder"}/>
       </section>
       <section>
-        <h2 className="font-bold text-center bg-[#0C4678] px-1 py-1 ml-6 mr-6 sm:w-1/3 sm:m-auto text-gray-200 rounded">
-          Choose search sumary or consolidated legislation
-        </h2>
         <div className="flex sm:flex-row sm:justify-center flex-col items-center m-3">
           <Button
             text={"Summary"}
             className={"hover:animate-bounce bg-[#096999] rounded-2xl sm:w-auto w-1/3 text px-2 py-2 m-2"}
             onClick={() => handleClick("sumary")}
-          />
-          <Button
-            text={"Consolidated legislation"}
-            className={"transition duration-1000 ease-in-out hover:bg-indigo-300 bg-[#096999] rounded-2xl px-2 py-2 m-2"}
-            onClick={() => handleClick("consolidatedLegislation")}
           />
         </div>
       </section>
